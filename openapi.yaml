@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: Comma fixer
+  description: Comma fixer, using machine learning to fix placement of commas within a string of text.
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:5000'
+paths:
+  /baseline/fix-commas:
+    post:
+      summary: Fixes comma placement in a sentence using the baseline model
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                s:
+                  type: string
+                  example: 'This, is a sentence with wrong commas at least some.'
+                  description: The text with commas to fix, can be removed, added, reordered at will, or left unchanged.
+      responses:
+        200:
+          description: Commas fixed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  s:
+                    type: string
+                    example: 'This is a sentence with wrong commas, at least some.'
+                    description: A text with commas fixed, or unchanged if not necessary. 
+                      TODO WARNING - the text will have spaces normalized and trimmed at the start and end.
+                      TODO some other punctuation may be changed as well
+
+        400:
+          description: Input text query parameter missing.
+
+  
