@@ -21,9 +21,9 @@ def test_fix_commas_leaves_correct_strings_unchanged(baseline_pipeline, test_inp
 @pytest.mark.parametrize(
     "test_input, expected",
     [
-        ['I, am', 'I am.'],
-        ['A complex     clause however it misses a comma something else and a dot?',
-         'A complex claus,e, however, it misses a comma, something else and a dot.']]
+        ['I, am.', 'I am.'],
+        ['A complex     clause however it misses a comma something else and a dot...?',
+         'A complex     clause, however, it misses a comma, something else and a dot...?']]
 )
 def test_fix_commas_fixes_incorrect_commas(baseline_pipeline, test_input, expected):
     result = fix_commas(baseline_pipeline, s=test_input)

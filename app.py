@@ -9,7 +9,8 @@ logging.basicConfig(level=logging.INFO)
 
 @app.route('/', methods=['GET'])
 def root():
-    return ("Welcome to the comma fixer. Go to /fix-commas?s='some text' or /baseline/fix-commas?s='some text' to try "
+    return ("Welcome to the comma fixer. Send a POST request to /fix-commas or /baseline/fix-commas with a string "
+            "'s' in the JSON body to try "
             "out the functionality.")
 
 
@@ -17,7 +18,7 @@ def root():
 def fix_commas_with_baseline():
     data = request.get_json()
     if 's' in data:
-        return make_response(jsonify({"s": fix_commas(app.baseline_pipeline, data['s'])}), 200)
+        return make_response(jsonify({'s': fix_commas(app.baseline_pipeline, data['s'])}), 200)
     else:
         return make_response("Parameter 's' missing", 400)
 

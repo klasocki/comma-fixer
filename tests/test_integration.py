@@ -1,34 +1,49 @@
-import json
-
-from app import app
+from flask import json
 import pytest
 
+from app import app
+from baseline import create_baseline_pipeline
 
-def test_fix_commas_fails_on_no_parameter():
-    response = app.test_client().post('/baseline/fix-commas/')
+
+@pytest.fixture()
+def client():
+    app.config["DEBUG"] = True
+    app.config["TESTING"] = True
+    app.baseline_pipeline = create_baseline_pipeline()
+    yield app.test_client()
+
+
+def test_fix_commas_fails_on_no_parameter(client):
+    response = client.post('/baseline/fix-commas/')
+    assert response.status_code == 400
+
+
+def test_fix_commas_fails_on_wrong_parameters(client):
+    response = client.post('/baseline/fix-commas/', json={'text': "Some text."})
     assert response.status_code == 400
 
 
 @pytest.mark.parametrize(
     "test_input",
-    [[''],
-     ['Hello world.'],
-     ['This test string should not have any commas inside it.']]
+    ['',
+     'Hello world.',
+     'This test string should not have any commas inside it.']
 )
-def test_fix_commas_plain_string_unchanged(test_input: str):
-    response = app.test_client().post('/baseline/fix-commas/', data={'s': test_input})
-    print(response.data.decode('utf-8'))
-    # result = json.loads(response.data.decode('utf-8')).get('s')
+def test_fix_commas_plain_string_unchanged(client, test_input: str):
+    response = client.post('/baseline/fix-commas/', json={'s': test_input})
+
     assert response.status_code == 200
-    # assert result == test_input
+    assert response.get_json().get('s') == test_input
 
 
 @pytest.mark.parametrize(
     "test_input, expected",
-    [['', ''],
-     ['Hello world.', 'Hello world.'],
-     ['This test string should not have any commas inside it.',
-      'This test string should not have any commas inside it.']]
+    [['I am, here.', 'I am here.'],
+     ['books pens and pencils',
+      'books, pens and pencils.']]
 )
-def test_fix_commas_fixes_wrong_commas(test_input: str, expected: str):
-    assert False
+def test_fix_commas_fixes_wrong_commas(client, test_input: str, expected: str):
+    response = client.post('/baseline/fix-commas/', json={'s': test_input})
+
+    assert response.status_code == 200
+    assert response.get_json().get('s') == expected
