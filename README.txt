@@ -1,0 +1,1 @@
+`docker log [id]` for logs from the container.

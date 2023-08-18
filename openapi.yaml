@@ -19,7 +19,8 @@ paths:
                 s:
                   type: string
                   example: 'This, is a sentence with wrong commas at least some.'
-                  description: The text with commas to fix, can be removed, added, reordered at will, or left unchanged.
+                  description: The text with commas to fix. Commas can be removed, added, reordered at will, or left 
+                    unchanged. Other punctuation, whitespaces and so on will stay intact.
       responses:
         200:
           description: Commas fixed.

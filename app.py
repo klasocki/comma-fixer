@@ -1,10 +1,13 @@
 from flask import Flask, request, jsonify, make_response
-from baseline import fix_commas, create_baseline_pipeline
+from src.baseline import fix_commas, create_baseline_pipeline
 import logging
 
-app = Flask(__name__)
 logger = logging.Logger(__name__)
 logging.basicConfig(level=logging.INFO)
+
+app = Flask(__name__)
+logging.info('Loading the baseline model...')
+app.baseline_pipeline = create_baseline_pipeline()
 
 
 @app.route('/', methods=['GET'])
@@ -25,6 +28,5 @@ def fix_commas_with_baseline():
 
 
 if __name__ == '__main__':
-    logger.info("Loading the baseline model.")
-    app.baseline_pipeline = create_baseline_pipeline()
-    app.run(debug=True) # TODO get this from config or env variable
+    app.run(debug=True)
+

@@ -1,0 +1,28 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./:/comma-fixer
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8001:80
+    networks:
+      - my-network
+    depends_on:
+      - flask
+  flask:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: comma-fixer
+    command: gunicorn --bind 0.0.0.0:8000 "app:app" --timeout 300 #--workers 4
+    volumes:
+      - ./:/comma-fixer
+    networks:
+      my-network:
+        aliases:
+          - flask-app
+
+networks:
+  my-network:

@@ -47,3 +47,11 @@ def test_fix_commas_fixes_wrong_commas(client, test_input: str, expected: str):
 
     assert response.status_code == 200
     assert response.get_json().get('s') == expected
+
+
+def test_with_a_very_long_string(client):
+    s = "Just a long string. " * 1000
+    response = client.post('/baseline/fix-commas/', json={'s': s})
+
+    assert response.status_code == 200
+    assert response.get_json().get('s') == s
