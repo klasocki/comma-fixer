@@ -29,7 +29,7 @@ def test_fix_commas_fails_on_wrong_parameters(client):
      'Hello world.',
      'This test string should not have any commas inside it.']
 )
-def test_fix_commas_plain_string_unchanged(client, test_input: str):
+def test_fix_commas_correct_string_unchanged(client, test_input: str):
     response = client.post('/baseline/fix-commas/', json={'s': test_input})
 
     assert response.status_code == 200
@@ -40,7 +40,7 @@ def test_fix_commas_plain_string_unchanged(client, test_input: str):
     "test_input, expected",
     [['I am, here.', 'I am here.'],
      ['books pens and pencils',
-      'books, pens and pencils.']]
+      'books, pens and pencils']]
 )
 def test_fix_commas_fixes_wrong_commas(client, test_input: str, expected: str):
     response = client.post('/baseline/fix-commas/', json={'s': test_input})

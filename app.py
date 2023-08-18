@@ -16,14 +16,15 @@ def root():
 
 @app.route('/baseline/fix-commas/', methods=['POST'])
 def fix_commas_with_baseline():
+    json_field_name = 's'
     data = request.get_json()
-    if 's' in data:
-        return make_response(jsonify({'s': fix_commas(app.baseline_pipeline, data['s'])}), 200)
+    if json_field_name in data:
+        return make_response(jsonify({json_field_name: fix_commas(app.baseline_pipeline, data['s'])}), 200)
     else:
-        return make_response("Parameter 's' missing", 400)
+        return make_response(f"Parameter '{json_field_name}' missing", 400)
 
 
 if __name__ == '__main__':
     logger.info("Loading the baseline model.")
     app.baseline_pipeline = create_baseline_pipeline()
-    app.run(debug=True)
+    app.run(debug=True) # TODO get this from config or env variable
