@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fast API 🤗 Space served with Uvicorn</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <main>
+      <section id="comma-fixing">
+        <h2>Fixing commas using Transformers</h2>
+        <p>
+          Model:
+          <a
+            href="https://huggingface.co/oliverguhr/fullstop-punctuation-multilang-large"
+            rel="noreferrer"
+            target="_blank"
+            >oliverguhr/fullstop-punctuation-multilang-large
+          </a>
+        </p>
+        <form class="comma-fixing-form">
+          <label for="comma-fixing-input">Text with incorrect commas</label>
+          <input
+            id="comma-fixing-input"
+            type="text"
+            value="This is however a very bad, and terrible sentence grammatically that is."
+          />
+          <button id="comma-fixing-submit">Submit</button>
+          <p class="comma-fixing-output"></p>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

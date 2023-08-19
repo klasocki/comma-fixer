@@ -9,7 +9,7 @@ ENV PATH="/venv/bin:$PATH"
 COPY requirements.txt .
 COPY test-requirements.txt .
 RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 COPY src/baseline.py src/baseline.py
 ENV TRANSFORMERS_CACHE=/coma-fixer/.cache

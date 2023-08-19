@@ -13,3 +13,5 @@ app_port: 8000
 `docker log [id]` for logs from the container.
 
 `docker build -t comma-fixer --target test .` for tests
+
+`git push hub` to deploy to huggingface hub, after adding a remote
