@@ -1,17 +1,21 @@
 from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline, NerPipeline
 
 
-def create_baseline_pipeline(model_name="oliverguhr/fullstop-punctuation-multilang-large") -> NerPipeline:
+class BaselineCommaFixer:
+    def __init__(self):
+        self._ner = _create_baseline_pipeline()
+
+    def fix_commas(self, s: str) -> str:
+        return _fix_commas_based_on_pipeline_output(
+            self._ner(_remove_punctuation(s)),
+            s
+        )
+
+
+def _create_baseline_pipeline(model_name="oliverguhr/fullstop-punctuation-multilang-large") -> NerPipeline:
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForTokenClassification.from_pretrained(model_name)
     return pipeline('ner', model=model, tokenizer=tokenizer)
-
-
-def fix_commas(ner_pipeline: NerPipeline, s: str) -> str:
-    return _fix_commas_based_on_pipeline_output(
-        ner_pipeline(_remove_punctuation(s)),
-        s
-    )
 
 
 def _remove_punctuation(s: str) -> str:
@@ -29,7 +33,7 @@ def _fix_commas_based_on_pipeline_output(pipeline_json: list[dict], original_s: 
         current_offset = _find_current_token(current_offset, i, pipeline_json, result)
         if _should_insert_comma(i, pipeline_json):
             result = result[:current_offset] + ',' + result[current_offset:]
-            current_offset += 1
+        current_offset += 1
     return result
 
 
@@ -43,3 +47,7 @@ def _find_current_token(current_offset, i, pipeline_json, result, new_word_indic
     # Find the current word in the result string, starting looking at current offset
     current_offset = result.find(current_word, current_offset) + len(current_word)
     return current_offset
+
+
+if __name__ == "__main__":
+    BaselineCommaFixer()  # to pre-download the model and tokenizer

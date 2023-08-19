@@ -1,21 +1,17 @@
-from flask import json
+from fastapi.testclient import TestClient
 import pytest
 
 from app import app
-from baseline import create_baseline_pipeline
 
 
 @pytest.fixture()
 def client():
-    app.config["DEBUG"] = True
-    app.config["TESTING"] = True
-    app.baseline_pipeline = create_baseline_pipeline()
-    yield app.test_client()
+    yield TestClient(app)
 
 
 def test_fix_commas_fails_on_no_parameter(client):
     response = client.post('/baseline/fix-commas/')
-    assert response.status_code == 400
+    assert response.status_code == 422
 
 
 def test_fix_commas_fails_on_wrong_parameters(client):
@@ -33,7 +29,7 @@ def test_fix_commas_correct_string_unchanged(client, test_input: str):
     response = client.post('/baseline/fix-commas/', json={'s': test_input})
 
     assert response.status_code == 200
-    assert response.get_json().get('s') == test_input
+    assert response.json().get('s') == test_input
 
 
 @pytest.mark.parametrize(
@@ -46,7 +42,7 @@ def test_fix_commas_fixes_wrong_commas(client, test_input: str, expected: str):
     response = client.post('/baseline/fix-commas/', json={'s': test_input})
 
     assert response.status_code == 200
-    assert response.get_json().get('s') == expected
+    assert response.json().get('s') == expected
 
 
 def test_with_a_very_long_string(client):
@@ -54,4 +50,4 @@ def test_with_a_very_long_string(client):
     response = client.post('/baseline/fix-commas/', json={'s': s})
 
     assert response.status_code == 200
-    assert response.get_json().get('s') == s
+    assert response.json().get('s') == s

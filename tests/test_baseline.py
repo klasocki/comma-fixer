@@ -1,10 +1,10 @@
 import pytest
-from baseline import create_baseline_pipeline, fix_commas, _remove_punctuation
+from baseline import BaselineCommaFixer, _remove_punctuation
 
 
 @pytest.fixture()
-def baseline_pipeline():
-    yield create_baseline_pipeline()
+def baseline_fixer():
+    yield BaselineCommaFixer()
 
 
 @pytest.mark.parametrize(
@@ -14,8 +14,8 @@ def baseline_pipeline():
      'This test string should not have any commas inside it.',
      'aAaalLL the.. weird?~! punctuation.should also . be kept-as is! Only fixing-commas.']
 )
-def test_fix_commas_leaves_correct_strings_unchanged(baseline_pipeline, test_input):
-    result = fix_commas(baseline_pipeline, s=test_input)
+def test_fix_commas_leaves_correct_strings_unchanged(baseline_fixer, test_input):
+    result = baseline_fixer.fix_commas(s=test_input)
     assert result == test_input
 
 
@@ -32,8 +32,8 @@ def test_fix_commas_leaves_correct_strings_unchanged(baseline_pipeline, test_inp
         ['I had no Creativity left, therefore, I come here, and write useless examples, for this test.',
          'I had no Creativity left therefore, I come here and write useless examples for this test.']]
 )
-def test_fix_commas_fixes_incorrect_commas(baseline_pipeline, test_input, expected):
-    result = fix_commas(baseline_pipeline, s=test_input)
+def test_fix_commas_fixes_incorrect_commas(baseline_fixer, test_input, expected):
+    result = baseline_fixer.fix_commas(s=test_input)
     assert result == expected
 
 

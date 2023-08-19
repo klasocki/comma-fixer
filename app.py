@@ -1,32 +1,35 @@
-from flask import Flask, request, jsonify, make_response
-from src.baseline import fix_commas, create_baseline_pipeline
+import uvicorn
+from fastapi import FastAPI, HTTPException
+from src.baseline import BaselineCommaFixer
 import logging
 
 logger = logging.Logger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-app = Flask(__name__)
-logging.info('Loading the baseline model...')
-app.baseline_pipeline = create_baseline_pipeline()
+app = FastAPI() #TODO router?
+logger.info('Loading the baseline model...')
+app.baseline_model = BaselineCommaFixer()
 
 
-@app.route('/', methods=['GET'])
-def root():
+@app.get('/')
+async def root():
     return ("Welcome to the comma fixer. Send a POST request to /fix-commas or /baseline/fix-commas with a string "
             "'s' in the JSON body to try "
             "out the functionality.")
 
 
-@app.route('/baseline/fix-commas/', methods=['POST'])
-def fix_commas_with_baseline():
+@app.post('/baseline/fix-commas/')
+async def fix_commas_with_baseline(data: dict):
     json_field_name = 's'
-    data = request.get_json()
     if json_field_name in data:
-        return make_response(jsonify({json_field_name: fix_commas(app.baseline_pipeline, data['s'])}), 200)
+        logger.debug('Fixing commas.')
+        return {json_field_name: app.baseline_model.fix_commas(data['s'])}
     else:
-        return make_response(f"Parameter '{json_field_name}' missing", 400)
+        msg = f"Text '{json_field_name}' missing"
+        logger.debug(msg)
+        raise HTTPException(status_code=400, detail=msg)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    uvicorn.run("app:app", reload=True, port=8000)
 

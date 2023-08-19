@@ -1,3 +1,7 @@
 .idea
 data/
 .pytest_cache
+.gitignore
+README.txt
+openapi.yaml
+
