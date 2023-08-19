@@ -2,6 +2,6 @@
 data/
 .pytest_cache
 .gitignore
-README.txt
+README.md
 openapi.yaml
 
