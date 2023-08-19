@@ -1,31 +1,17 @@
+from os.path import realpath
+
 import uvicorn
-from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
+from fastapi import FastAPI
 from fastapi.responses import FileResponse
-from src.baseline import BaselineCommaFixer
-import logging
+from fastapi.staticfiles import StaticFiles
 
-logger = logging.Logger(__name__)
-logging.basicConfig(level=logging.INFO)
+from routers import baseline
 
-app = FastAPI()  # TODO router?
-logger.info('Loading the baseline model...')
-app.baseline_model = BaselineCommaFixer()
+app = FastAPI()
+app.include_router(baseline.router, prefix='/baseline')
 
-
-@app.post('/baseline/fix-commas/')
-async def fix_commas_with_baseline(data: dict):
-    json_field_name = 's'
-    if json_field_name in data:
-        logger.debug('Fixing commas.')
-        return {json_field_name: app.baseline_model.fix_commas(data['s'])}
-    else:
-        msg = f"Text '{json_field_name}' missing"
-        logger.debug(msg)
-        raise HTTPException(status_code=400, detail=msg)
-
-
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+# Without the realpath hack tests fail
+app.mount("/", StaticFiles(directory=realpath(f'{realpath(__file__)}/../static'), html=True), name="static")
 
 
 @app.get('/')
