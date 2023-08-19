@@ -33,7 +33,7 @@ def _fix_commas_based_on_pipeline_output(pipeline_json: list[dict], original_s: 
         current_offset = _find_current_token(current_offset, i, pipeline_json, result)
         if _should_insert_comma(i, pipeline_json):
             result = result[:current_offset] + ',' + result[current_offset:]
-        current_offset += 1
+            current_offset += 1
     return result
 
 
