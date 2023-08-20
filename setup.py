@@ -21,6 +21,7 @@ setup(
     extras_require={
         'training': [
             'datasets==2.14.4',
+            'seqeval'
             'notebook'
         ],
         'test': [

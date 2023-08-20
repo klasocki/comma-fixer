@@ -18,7 +18,7 @@ app_port: 8000
 
 `git push hub` to deploy to huggingface hub, after adding a remote
 
-Multi-stage build brings down the size from 9GB+ to around 7GB. 
+Multi-stage build brings down the size from 9GB+ to around 7GB.
 Less not possible most likely, due to the size of torch and models.
 
 Reported token classification F1 scores on commas for different languages, on a political speeches' dataset:
@@ -26,4 +26,10 @@ Reported token classification F1 scores on commas for different languages, on a 
 | English | German | French | Italian |
 |---------|--------|--------|---------|
 | 0.819   | 0.945  | 0.831  | 0.798   |
+
+Evaluation of the baseline model on the wikitext-103-raw-v1 validation dataset:
+
+| precision | recall | F1   | support |
+|-----------|--------|------|---------|
+| 0.79      | 0.71   | 0.75 | 10079   |
 
