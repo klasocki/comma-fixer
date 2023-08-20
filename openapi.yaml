@@ -32,11 +32,10 @@ paths:
                   s:
                     type: string
                     example: 'This is a sentence with wrong commas, at least some.'
-                    description: A text with commas fixed, or unchanged if not necessary. 
-                      TODO WARNING - the text will have spaces normalized and trimmed at the start and end.
-                      TODO some other punctuation may be changed as well
+                    description: A text with commas fixed, or unchanged if not necessary. Everything other that 
+                      commas will stay as it was originally.
 
         400:
-          description: Input text query parameter missing.
+          description: A required field missing from the POST request body JSON.
 
   

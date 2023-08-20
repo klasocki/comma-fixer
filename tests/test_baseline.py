@@ -30,7 +30,15 @@ def test_fix_commas_leaves_correct_strings_unchanged(baseline_fixer, test_input)
         ['Even newlines\ntabs\tand others get preserved.',
          'Even newlines,\ntabs\tand others get preserved.'],
         ['I had no Creativity left, therefore, I come here, and write useless examples, for this test.',
-         'I had no Creativity left therefore, I come here and write useless examples for this test.']]
+         'I had no Creativity left therefore, I come here and write useless examples for this test.'],
+        [' This is a sentence. With, a lot of, useless punctuation!!??. O.o However we have to insert commas O-O, '
+         'nonetheless or we will fail this test.',
+         ' This is a sentence. With a lot of useless punctuation!!??. O.o However, we have to insert commas O-O '
+         'nonetheless, or we will fail this test.'],
+        [" The ship 's secondary armament consisted of fourteen 45 @-@ calibre 6 @-@ inch ( 152 mm ) quick @-@ firing ( QF ) guns mounted in casemates . Lighter guns consisted of eight 47 @-@ millimetre ( 1 @.@ 9 in ) three @-@ pounder Hotchkiss guns and four 47 @-@ millimetre 2 @.@ 5 @-@ pounder Hotchkiss guns . The ship was also equipped with four submerged 18 @-@ inch torpedo tubes two on each broadside .",
+         " The ship 's secondary armament consisted of fourteen 45 @-@ calibre 6 @-@ inch ( 152 mm ) quick @-@ firing ( QF ) guns mounted in casemates . Lighter guns consisted of eight 47 @-@ millimetre ( 1 @.@ 9 in ), three @-@ pounder Hotchkiss guns and four 47 @-@ millimetre 2 @.@ 5 @-@ pounder Hotchkiss guns . The ship was also equipped with four submerged 18 @-@ inch torpedo tubes, two on each broadside ."]
+
+    ]
 )
 def test_fix_commas_fixes_incorrect_commas(baseline_fixer, test_input, expected):
     result = baseline_fixer.fix_commas(s=test_input)
@@ -39,10 +47,11 @@ def test_fix_commas_fixes_incorrect_commas(baseline_fixer, test_input, expected)
 
 @pytest.mark.parametrize(
     "test_input, expected",
-    [['', ''],
-     ['Hello world...', 'Hello world'],
+    [['', ('', [])],
+     [' world...', (' world', [6, 7, 8])],
+     [',,,', ('', [])],
      ['This: test - string should not, have any commas inside it...?',
-      'This test  string should not have any commas inside it']]
+      ('This test  string should not have any commas inside it', [4, 11, 57, 58, 59, 60])]]
 )
 def test__remove_punctuation(test_input, expected):
     assert _remove_punctuation(test_input) == expected
