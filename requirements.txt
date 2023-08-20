@@ -1,9 +1,1 @@
-fastapi==0.101.1
-gunicorn==21.2.0
-uvicorn==0.23.2
-torch==2.0.1
-transformers==4.31.0
-
-# for the tokenizer of the baseline model
-protobuf==4.24.0
-sentencepiece==0.1.99
+-e .

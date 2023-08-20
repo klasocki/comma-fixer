@@ -1,5 +1,5 @@
 import pytest
-from baseline import BaselineCommaFixer, _remove_punctuation
+from commafixer.src.baseline import BaselineCommaFixer, _remove_punctuation
 
 
 @pytest.fixture()

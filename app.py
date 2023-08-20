@@ -1,11 +1,10 @@
 from os.path import realpath
-
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from routers import baseline
+from commafixer.routers import baseline
 
 app = FastAPI()
 app.include_router(baseline.router, prefix='/baseline')

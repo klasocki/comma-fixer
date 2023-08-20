@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: Comma fixer
   description: Comma fixer, using machine learning to fix placement of commas within a string of text.
-  version: 1.0.0
+  version: 0.1.0
 servers:
   - url: 'https://localhost:5000'
 paths:

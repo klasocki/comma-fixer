@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 import logging
 
-from src.baseline import BaselineCommaFixer
+from commafixer.src.baseline import BaselineCommaFixer
 
 
 logger = logging.Logger(__name__)
