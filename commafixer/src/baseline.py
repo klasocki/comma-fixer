@@ -2,8 +2,8 @@ from transformers import AutoTokenizer, AutoModelForTokenClassification, pipelin
 
 
 class BaselineCommaFixer:
-    def __init__(self):
-        self._ner = _create_baseline_pipeline()
+    def __init__(self, device=-1):
+        self._ner = _create_baseline_pipeline(device=device)
 
     def fix_commas(self, s: str) -> str:
         return _fix_commas_based_on_pipeline_output(
@@ -12,10 +12,10 @@ class BaselineCommaFixer:
         )
 
 
-def _create_baseline_pipeline(model_name="oliverguhr/fullstop-punctuation-multilang-large") -> NerPipeline:
+def _create_baseline_pipeline(model_name="oliverguhr/fullstop-punctuation-multilang-large", device=-1) -> NerPipeline:
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForTokenClassification.from_pretrained(model_name)
-    return pipeline('ner', model=model, tokenizer=tokenizer)
+    return pipeline('ner', model=model, tokenizer=tokenizer, device=device)
 
 
 def _remove_punctuation(s: str) -> str:
