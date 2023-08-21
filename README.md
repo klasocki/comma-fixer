@@ -90,7 +90,7 @@ dataset are as follows:
 
 | precision | recall | F1   | support |
 |-----------|--------|------|---------|
-| 0.79      | 0.71   | 0.75 | 10079   |
+| 0.79      | 0.72   | 0.75 | 10079   |
 
 We treat each comma as one token instance, as opposed to the original paper, which NER-tags the whole multiple-token 
 preceding words as comma class tokens.
