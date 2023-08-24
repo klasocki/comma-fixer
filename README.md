@@ -88,9 +88,11 @@ dataset:
 The results of our evaluation of the baseline model out of domain on the English wikitext-103-raw-v1 validation 
 dataset are as follows:
 
-| precision | recall | F1   | support |
-|-----------|--------|------|---------|
-| 0.79      | 0.72   | 0.75 | 10079   |
+| Model    | precision | recall | F1   | support |
+|----------|-----------|--------|------|---------|
+| baseline | 0.79      | 0.72   | 0.75 | 10079   |
+| ours*    | 0.86      | 0.85   | 0.85 | 10079   |
+*details of the fine-tuning process in the next section.
 
 We treat each comma as one token instance, as opposed to the original paper, which NER-tags the whole multiple-token 
 preceding words as comma class tokens.
@@ -100,17 +102,26 @@ In our approach, for each comma from the prediction text obtained from the model
  * If a comma from ground truth is not predicted, it counts as a false negative.
 
 ## Training
-While fine-tuning an encoder BERT-like pre-trained model for NER seems like the best approach to the problem, 
-since it preserves the sentence structure and only focuses on commas,
-with limited GPU resources, we doubt we could beat the baseline model with a similar approach.
-We could fine-tune the baseline on our data, focusing on commas, and see if it brings any improvement.
+The fine-tuned model can be found [here](https://huggingface.co/klasocki/roberta-large-lora-ner-comma-fixer).
 
-However, we thought that trying out pre-trained text-to-text or decoder-only LLMs for this task using PEFT could be 
+To compare with the baseline, we fine-tune the same model, RoBERTa large, on the wikitext English dataset.
+We use a similar approach, where we treat comma-fixing as a NER problem, and for each token predict whether a comma 
+should be inserted after it. 
+
+The biggest differences are the dataset, the fact that we focus on commas, and that we use [LoRa](https://arxiv.org/pdf/2106.09685.pdf)
+for parameter-efficient fine-tuning of the base model.
+
+The biggest advantage of this approach is that it preserves the input structure and only focuses on commas, 
+ensuring that nothing else will be changed and that the model will not have to learn repeating the input back in case
+no commas should be inserted.
+
+
+We have also thought that trying out pre-trained text-to-text or decoder-only LLMs for this task using PEFT could be 
 interesting, and wanted to check if we have enough resources for low-rank adaptation or prefix-tuning.
+While the model would have to learn to not change anything else than commas and the free-form could prove evaluation
+to be difficult, this approach has added flexibility in case we decide we want to fix other errors in the future not 
+just commas.
 
-We adapt the code from [this tutorial](https://www.youtube.com/watch?v=iYr1xZn26R8) in order to fine-tune a 
-[bloom LLM](https://huggingface.co/bigscience/bloom-560m) to our task using 
-[LoRa](https://arxiv.org/pdf/2106.09685.pdf).
 However, even with the smallest model from the family, we struggled with CUDA memory errors using the free Google 
 colab GPU quotas, and could only train with a batch size of two.
 After a short training, it seems the loss keeps fluctuating and the model is only able to learn to repeat the 
@@ -118,8 +129,6 @@ original phrase back.
 
 If time permits, we plan to experiment with seq2seq pre-trained models, increasing gradient accumulation steps, and the 
 percentage of 
-data with commas.
-The latter could help since wikitext contains highly diverse data, with many rows being empty strings, 
-headers, or short paragraphs.
+data with commas, and trying out artificially inserting mistaken commas as opposed to removing them in preprocessing.
 
 

@@ -21,8 +21,10 @@ setup(
     extras_require={
         'training': [
             'datasets==2.14.4',
+            'notebook',
+            'peft==0.5.0',
             'seqeval',
-            'notebook'
+            'evaluate==0.4.0'
         ],
         'test': [
             'pytest',
