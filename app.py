@@ -4,9 +4,10 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from commafixer.routers import baseline
+from commafixer.routers import baseline, fixer
 
 app = FastAPI()
+app.include_router(fixer.router, prefix='/fix-commas')
 app.include_router(baseline.router, prefix='/baseline')
 
 # Without the realpath hack tests fail

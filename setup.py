@@ -11,6 +11,8 @@ setup(
     install_requires=[
         "fastapi == 0.101.1",
         "uvicorn == 0.23.2",
+        "nltk == 3.8.1",
+        'peft==0.5.0',
         "torch == 2.0.1",
         "transformers == 4.31.0",
         # for the tokenizer of the baseline model
@@ -22,7 +24,6 @@ setup(
         'training': [
             'datasets==2.14.4',
             'notebook',
-            'peft==0.5.0',
             'seqeval',
             'evaluate==0.4.0'
         ],

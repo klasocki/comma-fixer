@@ -10,9 +10,11 @@ COPY setup.py .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir --upgrade .
 
-COPY commafixer/src/baseline.py commafixer/src/baseline.py
+# This pre-downloads models and tokenizers
+COPY commafixer/src/ commafixer/src/
 ENV TRANSFORMERS_CACHE=/coma-fixer/.cache
-RUN python commafixer/src/baseline.py  # This pre-downloads models and tokenizers
+RUN python commafixer/src/baseline.py
+RUN python commafixer/src/fixer.py
 
 COPY . .
 

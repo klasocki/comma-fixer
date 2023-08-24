@@ -1,7 +1,7 @@
 const commaFixingForm = document.querySelector(".comma-fixing-form");
 
 const fixCommas = async (text) => {
-    const inferResponse = await fetch(`baseline/fix-commas/`, {
+    let request = {
         method: "POST",
         body: JSON.stringify({
             s: text
@@ -9,10 +9,13 @@ const fixCommas = async (text) => {
         headers: {
             "Content-type": "application/json; charset=UTF-8"
         }
-    });
-    const inferJson = await inferResponse.json();
+    };
+    const baselineResponse = await fetch(`baseline/fix-commas/`, request);
+    const fixerResponse = await fetch(`fix-commas/`, request);
+    const baselineJson = await baselineResponse.json();
+    const inferJson = await fixerResponse.json();
 
-    return inferJson.s;
+    return {baseline: baselineJson.s, main: inferJson.s};
 };
 
 commaFixingForm.addEventListener("submit", async (event) => {
@@ -21,5 +24,7 @@ commaFixingForm.addEventListener("submit", async (event) => {
     const commaFixingInput = document.getElementById("comma-fixing-input");
     const commaFixingParagraph = document.querySelector(".comma-fixing-output");
 
-    commaFixingParagraph.textContent = await fixCommas(commaFixingInput.value);
+    const fixed = await fixCommas(commaFixingInput.value);
+
+    commaFixingParagraph.textContent = `Our model: ${fixed.main}\n\nBaseline model: ${fixed.baseline}`
 });
