@@ -27,6 +27,7 @@ COPY --chown=user . .
 FROM base as test
 
 RUN pip install .[test]
+# TODO don't run all at once because of memory errors?
 RUN python -m pytest tests
 
 FROM python:3.10-slim as deploy

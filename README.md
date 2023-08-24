@@ -27,6 +27,7 @@ Note that you might have to
 `sudo service docker start`
 first.
 
+
 The application should then be available at http://localhost:8000.
 For the API, see the `openapi.yaml` file.
 Docker-compose mounts a volume and listens to changes in the source code, so the application will be reloaded and 
@@ -35,13 +36,23 @@ reflect them.
 We use multi-stage builds to reduce the image size, ensure flexibility in requirements and that tests are run before 
 each deployment.
 However, while it does reduce the size by nearly 3GB, the resulting image still contains deep learning libraries and 
-pre-downloaded models, and will take around 7GB of disk space.
+pre-downloaded models, and will take around 9GB of disk space.
+
+NOTE: Since the service is hosting two large deep learning models, there might be memory issues depending on your 
+machine, where the terminal running 
+docker would simply crash.
+Should that happen, you can try increasing resources allocated to docker, or splitting commands in the docker file, 
+e.g., running tests one by one.
+If everything fails, you can still use the hosted huggingface hub demo, or follow the steps below and run the app 
+locally without Docker.
 
 Alternatively, you can setup a python environment by hand. It is recommended to use a virtualenv. Inside one, run
 ```bash
 pip install -e .[test]
 ```
 the `[test]` option makes sure to install test dependencies.
+
+Then, run `python app.py` or `uvicorn --host 0.0.0.0 --port 8000 "app:app" --reload` to run the application.
 
 If you intend to perform training and evaluation of deep learning models, install also using the `[training]` option. 
 
@@ -91,7 +102,7 @@ dataset are as follows:
 | Model    | precision | recall | F1   | support |
 |----------|-----------|--------|------|---------|
 | baseline | 0.79      | 0.72   | 0.75 | 10079   |
-| ours*    | 0.86      | 0.85   | 0.85 | 10079   |
+| ours*    | 0.84      | 0.84   | 0.84 | 10079   |
 *details of the fine-tuning process in the next section.
 
 We treat each comma as one token instance, as opposed to the original paper, which NER-tags the whole multiple-token 

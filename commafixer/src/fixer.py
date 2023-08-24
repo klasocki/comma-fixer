@@ -52,7 +52,8 @@ class CommaFixer:
         tokenizer = AutoTokenizer.from_pretrained(config.base_model_name_or_path)
         model = PeftModel.from_pretrained(inference_model, model_name)
         model = model.merge_and_unload()  # Join LoRa matrices with the main model for faster inference
-        return model, tokenizer
+        # TODO batch, and move to CUDA if available
+        return model.eval(), tokenizer
 
 
 def _fix_commas_based_on_labels_and_offsets(
