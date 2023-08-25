@@ -1,8 +1,10 @@
 from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline, NerPipeline
 import re
 
+from commafixer.src.comma_fixer_interface import CommaFixerInterface
 
-class BaselineCommaFixer:
+
+class BaselineCommaFixer(CommaFixerInterface):
     """
     A wrapper class for the oliverguhr/fullstop-punctuation-multilang-large baseline punctuation restoration model.
     It adapts the model to perform comma fixing instead of full punctuation restoration, that is, removes the

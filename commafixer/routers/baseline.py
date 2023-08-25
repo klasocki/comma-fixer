@@ -1,8 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 import logging
 
 from commafixer.src.baseline import BaselineCommaFixer
-
+from common import fix_commas_request_handler
 
 logger = logging.Logger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -16,10 +16,4 @@ router.model = BaselineCommaFixer()
 @router.post('/fix-commas/')
 async def fix_commas_with_baseline(data: dict):
     json_field_name = 's'
-    if json_field_name in data:
-        logger.debug('Fixing commas.')
-        return {json_field_name: router.model.fix_commas(data['s'])}
-    else:
-        msg = f"Text '{json_field_name}' missing"
-        logger.debug(msg)
-        raise HTTPException(status_code=400, detail=msg)
+    return fix_commas_request_handler(json_field_name, data, logger, router.model)

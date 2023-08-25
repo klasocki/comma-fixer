@@ -3,8 +3,10 @@ from transformers import AutoTokenizer, AutoModelForTokenClassification, pipelin
 import nltk
 import re
 
+from commafixer.src.comma_fixer_interface import CommaFixerInterface
 
-class CommaFixer:
+
+class CommaFixer(CommaFixerInterface):
     """
     A wrapper class for the fine-tuned comma fixer model.
     """
@@ -84,7 +86,7 @@ def _fix_commas_based_on_labels_and_offsets(
 
 def _should_insert_comma(label, result, current_offset) -> bool:
     # Only insert commas for the final token of a word, that is, if next word starts with a space.
-    # TODO perharps for low confidence tokens, we should use the original decision of the user in the input?
+    # TODO perhaps for low confidence tokens, we should use the original decision of the user in the input?
     return label == 'B-COMMA' and result[current_offset].isspace()
 
 
