@@ -113,7 +113,8 @@ In our approach, for each comma from the prediction text obtained from the model
  * If a comma from ground truth is not predicted, it counts as a false negative.
 
 ## Training
-The fine-tuned model can be found [here](https://huggingface.co/klasocki/roberta-large-lora-ner-comma-fixer).
+The fine-tuned model is the [klasocki/roberta-large-lora-ner-comma-fixer](https://huggingface.co/klasocki/roberta-large-lora-ner-comma-fixer).
+Further description can be found in the model card.
 
 To compare with the baseline, we fine-tune the same model, RoBERTa large, on the wikitext English dataset.
 We use a similar approach, where we treat comma-fixing as a NER problem, and for each token predict whether a comma 

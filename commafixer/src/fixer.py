@@ -1,9 +1,9 @@
 from peft import PeftConfig, PeftModel
-from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline, NerPipeline, RobertaTokenizerFast
+from transformers import AutoTokenizer, AutoModelForTokenClassification, RobertaTokenizerFast
 import nltk
 import re
 
-from commafixer.src.comma_fixer_interface import CommaFixerInterface
+from comma_fixer_interface import CommaFixerInterface
 
 
 class CommaFixer(CommaFixerInterface):
@@ -11,7 +11,7 @@ class CommaFixer(CommaFixerInterface):
     A wrapper class for the fine-tuned comma fixer model.
     """
 
-    def __init__(self, device=-1):
+    def __init__(self):
         self.id2label = {0: 'O', 1: 'B-COMMA'}
         self.label2id = {'O': 0, 'B-COMMA': 1}
         self.model, self.tokenizer = self._load_peft_model()

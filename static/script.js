@@ -22,9 +22,11 @@ commaFixingForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const commaFixingInput = document.getElementById("comma-fixing-input");
-    const commaFixingParagraph = document.querySelector(".comma-fixing-output");
+    const commaFixingParagraph = document.querySelector(".comma-fixing-main-output");
+    const commaFixingBaselineParagraph = document.querySelector(".comma-fixing-baseline-output");
 
     const fixed = await fixCommas(commaFixingInput.value);
 
-    commaFixingParagraph.textContent = `Our model: ${fixed.main}\n\nBaseline model: ${fixed.baseline}`
+    commaFixingParagraph.textContent = `Our model: ${fixed.main}`
+    commaFixingBaselineParagraph.textContent = `Baseline model: ${fixed.baseline}`
 });
