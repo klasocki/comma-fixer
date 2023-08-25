@@ -84,6 +84,7 @@ def _fix_commas_based_on_labels_and_offsets(
 
 def _should_insert_comma(label, result, current_offset) -> bool:
     # Only insert commas for the final token of a word, that is, if next word starts with a space.
+    # TODO perharps for low confidence tokens, we should use the original decision of the user in the input?
     return label == 'B-COMMA' and result[current_offset].isspace()
 
 

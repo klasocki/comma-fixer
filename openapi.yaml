@@ -8,68 +8,65 @@ servers:
 paths:
   /fix-commas:
     post:
-      summary: Fixes comma placement in a sentence using the fine-tuned model
+      summary: Fixes comma placement in a sentence using the fine-tuned model (https://huggingface.co/klasocki/roberta-large-lora-ner-comma-fixer)
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                s:
-                  type: string
-                  example: 'This, is a sentence with wrong commas at least some.'
-                  description: The text with commas to fix. Commas can be removed, added, reordered at will, or left 
-                    unchanged. Other punctuation, whitespaces and so on will stay intact.
+              $ref: '#/components/schemas/CommaFixerRequestBody'
       responses:
         200:
-          description: Commas fixed.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  s:
-                    type: string
-                    example: 'This is a sentence with wrong commas, at least some.'
-                    description: A text with commas fixed, or unchanged if not necessary. Everything other that 
-                      commas will stay as it was originally.
-
+          $ref: '#/components/responses/200Fixed'
         400:
-          description: A required field missing from the POST request body JSON.
-
-# TODO remove duplication here
+          $ref: '#/components/responses/400ParameterMissing'
+        422:
+          $ref: '#/components/responses/422BodyMissing'
 
   /baseline/fix-commas:
     post:
-      summary: Fixes comma placement in a sentence using the baseline model
+      summary: Fixes comma placement in a sentence using the baseline model (https://huggingface.co/oliverguhr/fullstop-punctuation-multilang-large)
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                s:
-                  type: string
-                  example: 'This, is a sentence with wrong commas at least some.'
-                  description: The text with commas to fix. Commas can be removed, added, reordered at will, or left 
-                    unchanged. Other punctuation, whitespaces and so on will stay intact.
+              $ref: '#/components/schemas/CommaFixerRequestBody'
       responses:
         200:
-          description: Commas fixed.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  s:
-                    type: string
-                    example: 'This is a sentence with wrong commas, at least some.'
-                    description: A text with commas fixed, or unchanged if not necessary. Everything other that 
-                      commas will stay as it was originally.
-
+          $ref: '#/components/responses/200Fixed'
         400:
-          description: A required field missing from the POST request body JSON.
+          $ref: '#/components/responses/400ParameterMissing'
+        422:
+          $ref: '#/components/responses/422BodyMissing'
 
-  
+components:
+  schemas:
+    CommaFixerRequestBody:
+      type: object
+      properties:
+        s:
+          type: string
+          example: 'This, is a sentence with wrong commas at least some.'
+          description: The text with commas to fix. Commas can be removed, added, reordered at will, or left
+            unchanged. Other punctuation, whitespaces and so on will stay intact.
+
+  responses:
+    200Fixed:
+      description: Commas fixed.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              s:
+                type: string
+                example: 'This is a sentence with wrong commas, at least some.'
+                description: A text with commas fixed, or unchanged if not necessary. Everything other that
+                  commas will stay as it was originally.
+
+    400ParameterMissing:
+      description: A required field missing from the POST request body JSON.
+
+    422BodyMissing:
+      description: Request body missing
