@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 import logging
 
 from commafixer.src.fixer import CommaFixer

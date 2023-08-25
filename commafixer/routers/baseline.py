@@ -2,7 +2,7 @@ from fastapi import APIRouter
 import logging
 
 from commafixer.src.baseline import BaselineCommaFixer
-from common import fix_commas_request_handler
+from commafixer.routers.common import fix_commas_request_handler
 
 logger = logging.Logger(__name__)
 logging.basicConfig(level=logging.INFO)

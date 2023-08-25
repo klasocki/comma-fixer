@@ -13,16 +13,15 @@ ENV PYTHONUNBUFFERED=1
 RUN python -m venv venv
 ENV PATH="$HOME/comma-fixer/venv/bin:$PATH"
 
-COPY --chown=user setup.py .
+# TODO use requirements after all, since for setup.py to work properly we need the whole source code which breaks cache
+COPY --chown=user . .
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir --upgrade .
 
 # This pre-downloads models and tokenizers
-COPY --chown=user commafixer/src/ commafixer/src/
+# TODO should we give user an option to provide local models so that they don't donwload each time?
 RUN python commafixer/src/baseline.py
 RUN python commafixer/src/fixer.py
-
-COPY --chown=user . .
 
 FROM base as test
 

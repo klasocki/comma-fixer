@@ -1,8 +1,8 @@
-from os.path import realpath
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
+from os.path import realpath
 
 from commafixer.routers import baseline, fixer
 

@@ -1,7 +1,7 @@
 from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline, NerPipeline
 import re
 
-from comma_fixer_interface import CommaFixerInterface
+from commafixer.src.comma_fixer_interface import CommaFixerInterface
 
 
 class BaselineCommaFixer(CommaFixerInterface):

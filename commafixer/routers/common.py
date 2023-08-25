@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from logging import Logger
 
-from comma_fixer_interface import CommaFixerInterface
+from commafixer.src.comma_fixer_interface import CommaFixerInterface
 
 
 def fix_commas_request_handler(
