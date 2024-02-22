@@ -15,7 +15,7 @@ class CommaFixer(CommaFixerInterface):
         self.model, self.tokenizer = self._load_peft_model()
 
 # ctrl + shift + t go to tests, find test_baseline_fix_commas_fixes_incorrect_commas
-    def fix_commas(self , s : str = ['a', 'b'] ) -> str   :
+    def fix_commas(self , s : str ) -> str   :
         """TODO this function could use some documentation and testing"""
 
         s_no_commas = re.sub(r'\s*,', '', s)
