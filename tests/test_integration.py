@@ -38,8 +38,13 @@ class TestFixCommaApi:
         "test_input, expected",
         [['I am, here.', 'I am here.'],
          ['books pens and pencils',
-          'books, pens and pencils']]
+          'books, pens and pencils'],
+         ['books pens and more pens',
+          'books, pens and more pens'],
+         ['books pens and bananas',
+          'books, pens and bananas']]
     )
+
     def test_fix_commas_fixes_wrong_commas(self, client, endpoint, test_input: str, expected: str):
         response = client.post(endpoint, json={'s': test_input})
 

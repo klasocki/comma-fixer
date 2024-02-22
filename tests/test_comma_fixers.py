@@ -58,6 +58,7 @@ def test_main_model_fix_commas_fixes_correct_commas(comma_fixer, test_input, exp
 
 
 @pytest.mark.parametrize(
+    # TODO make it look prettier and add 'ha ha' to all the strings, alt + j, alt + shift + click for multi cursors,
     "test_input, expected",
     [
         ['I, am.', 'I am.'],
