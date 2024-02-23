@@ -76,5 +76,5 @@ CommaFixer()
 #  move block or line with ctrl + shift + arrow or ctrl + alt + arrow
 #  surround with - ctrl + alt + t. ALso shit + enter for newline, and ctrl + shift + enter for finishing statement.
 #  recent locations with ctrl + shift + e
+#  alt + enter in signature -> flip ,
 #  shift + click for logging conditional breakpoints
-
