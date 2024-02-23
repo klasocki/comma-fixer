@@ -29,7 +29,6 @@ class CommaFixer(CommaFixerInterface):
         logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
         # TODO ctrl + shift + p -> show expression type
         labels = [self.id2label[tag_id.item()] for tag_id in logits.argmax(dim=2).flatten()]
-        # TODO what does this method do? Go to definition ctrl + b, get your cursor back alt + shift + l
         return _fix_commas_based_on_labels_and_offsets(labels, s_no_commas, tokenized['offset_mapping'][0])
 
     def _load_peft_model(self, model_name="klasocki/roberta-large-lora-ner-comma-fixer") -> Tuple[
