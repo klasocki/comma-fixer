@@ -14,7 +14,7 @@ class CommaFixer(CommaFixerInterface):
         self.label2id = {'O': 0, 'B-COMMA': 1}
         self.model, self.tokenizer = self._load_peft_model()
 
-# ctrl + shift + t go to tests, find test_baseline_fix_commas_fixes_incorrect_commas
+# TODO ctrl + shift + t go to tests, find test_baseline_fix_commas_fixes_incorrect_commas
     def fix_commas(self , s : str ) -> str   :
         """TODO this function could use some documentation and testing"""
 
@@ -58,7 +58,7 @@ def _fix_commas_based_on_labels_and_offsets(
     for i, label in enumerate(labels):
         current_offset = offset_map[i][1] + commas_inserted
         # TODO extract method or variable - ctrl + alt + v/m, ctrl + shift + alt + t for all the options
-        # Should we insert commas, .not postfix refactoring
+        # Should we insert commas
         if label == 'B-COMMA' and result[current_offset].isspace():
             # TODO move outside of if with ctrl + shift + arrow or ctrl + alt + arrow
             result = result[:current_offset] + ',' + result[current_offset:]
@@ -69,7 +69,7 @@ def _fix_commas_based_on_labels_and_offsets(
 
 
 # to pre-download the model and tokenizer
-#TODO if __name__ == main with postfix refactoring - .main, .if
+#TODO if __name__ == main with postfix refactoring - .main, .if, .not
 CommaFixer()
 
 # TODO alt + h -> My productivity
