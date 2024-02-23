@@ -56,20 +56,23 @@ def _fix_commas_based_on_labels_and_offsets(
 
     for i, label in enumerate(labels):
         current_offset = offset_map[i][1] + commas_inserted
-        # TODO extract method or variable - ctrl + alt + v/m, ctrl + shift + alt + t for all the options
+        # TODO extract method or variable - ctrl + alt + v/m, or ctrl + shift + alt + t for all the options
         # Should we insert commas
         if label == 'B-COMMA' and result[current_offset].isspace():
-            # TODO move outside of if with ctrl + shift + arrow or ctrl + alt + arrow
             result = result[:current_offset] + ',' + result[current_offset:]
-
-            # TODO surround with - ctrl + alt + t. ALso shit + enter for newline, and ctrl + shift + enter for finishing statement.
             commas_inserted += 1
     return result
 
 
+# TODO if __name__ == main with postfix refactoring - .main, .if, .not, .return, .par, .while
 # to pre-download the model and tokenizer
-#TODO if __name__ == main with postfix refactoring - .main, .if, .not
 CommaFixer()
 
 # TODO alt + h -> My productivity
-# Feedback please!!
+#  Feedback please!!
+
+# TODO If time left:
+#  move block or line with ctrl + shift + arrow or ctrl + alt + arrow
+#  surround with - ctrl + alt + t. ALso shit + enter for newline, and ctrl + shift + enter for finishing statement.
+#  recent locations with ctrl + shift + e
+
