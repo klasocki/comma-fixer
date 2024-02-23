@@ -19,11 +19,11 @@ class CommaFixer(CommaFixerInterface):
         """TODO this function could use some documentation and testing"""
 
         s_no_commas = re.sub(r'\s*,', '', s)
-        # TODO fix formatting with ctrl + alt + l
+    #TODO fix formatting with ctrl + alt + l
         tokenized = self.tokenizer(s_no_commas ,return_tensors = 'pt' ,return_offsets_mapping =  True, return_length = True, is_split_into_words=False, trim_offsets=True)
 
-        if tokenized['length'][0] > self.tokenizer.model_max_length:
-            # TODO how was the parameter called? ctrl + p or ctrl + q
+        if tokenized['length'] [0] > self.tokenizer.model_max_length:
+                # TODO how was the parameter called? ctrl + p or ctrl + q
             return ' '.join(self.fix_commas(sentence) for sentence in nltk.sent_tokenize(s, ))
 
         logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
@@ -71,8 +71,10 @@ CommaFixer()
 # TODO alt + h -> My productivity
 #  Feedback please!!
 
+
 # TODO If time left:
 #  move block or line with ctrl + shift + arrow or ctrl + alt + arrow
 #  surround with - ctrl + alt + t. ALso shit + enter for newline, and ctrl + shift + enter for finishing statement.
 #  recent locations with ctrl + shift + e
+#  shift + click for logging conditional breakpoints
 
