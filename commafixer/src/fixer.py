@@ -6,14 +6,12 @@ import re
 import numpy as np
 from typing import Tuple
 # TODO fix formatting with ctrl + alt + l
-
 #TODO optimize imports with ctrl + alt + O
 class CommaFixer(CommaFixerInterface):
     def __init__(self):
         self.id2label = {0: 'O', 1: 'B-COMMA'}
         self.label2id = {'O': 0, 'B-COMMA': 1}
         self.model, self.tokenizer = self._load_peft_model()
-
 # TODO ctrl + shift + t go to tests, find test_baseline_fix_commas_fixes_incorrect_commas
     def fix_commas(self , s : str ) -> str   :
         """TODO this function could use some documentation and testing"""
@@ -27,6 +25,8 @@ class CommaFixer(CommaFixerInterface):
         logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
         labels = [self.id2label[tag_id.item()] for tag_id in logits.argmax(dim=2).flatten()]
         return _fix_commas_based_on_labels_and_offsets(labels, s_no_commas, tokenized['offset_mapping'][0])
+
+
 
     def _load_peft_model(self, model_name="klasocki/roberta-large-lora-ner-comma-fixer") -> Tuple[
         PeftModel, RobertaTokenizerFast]:
@@ -78,16 +78,17 @@ def fix_commas_with_todos(self, s: str) -> str:
     )
 
     if tokenized['length'][0] > self.tokenizer.model_max_length:
-        # TODO how was the parameter called? ctrl + p or ctrl + q
         return ' '.join(self.fix_commas(sentence) for sentence in nltk.sent_tokenize(s, ))
 
     logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
-    # TODO ctrl + shift + p -> show expression type
     labels = [self.id2label[tag_id.item()] for tag_id in logits.argmax(dim=2).flatten()]
     return _fix_commas_based_on_labels_and_offsets(labels, s_no_commas, tokenized['offset_mapping'][0])
 
 
 # TODO If time left:
+# In fix_commas():
+# TODO how was the parameter called? ctrl + p or ctrl + q
+# TODO ctrl + shift + p -> show expression type
 #  move block or line with ctrl + shift + arrow or ctrl + alt + arrow
 #  surround with - ctrl + alt + t. ALso shit + enter for newline, and ctrl + shift + enter for finishing statement.
 #  recent locations with ctrl + shift + e
