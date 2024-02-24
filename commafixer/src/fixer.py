@@ -4,7 +4,9 @@ import nltk
 from commafixer.src.comma_fixer_interface import CommaFixerInterface
 import re
 import numpy as np
-from typing import Tuple
+from typing import Tuple, List
+
+
 # TODO fix formatting with ctrl + alt + l
 #TODO optimize imports with ctrl + alt + O
 class CommaFixer(CommaFixerInterface):
@@ -29,7 +31,8 @@ class CommaFixer(CommaFixerInterface):
 
 
     def _load_peft_model(self, model_name="klasocki/roberta-large-lora-ner-comma-fixer") -> Tuple[
-        PeftModel, RobertaTokenizerFast]:
+        PeftModel, RobertaTokenizerFast
+    ]:
         config = PeftConfig.from_pretrained(model_name)
         # TODO completion ctrl + double space
 
@@ -44,9 +47,9 @@ class CommaFixer(CommaFixerInterface):
 
 
 def _fix_commas_based_on_labels_and_offsets(
-        labels: list[str],
+        labels: List[str],
         original_s: str,
-        offset_map: list[tuple[int, int]]
+        offset_map: List[Tuple[int, int]]
 ) -> str:
     result = original_s
     commas_inserted = 0
@@ -62,27 +65,12 @@ def _fix_commas_based_on_labels_and_offsets(
     return result
 
 
-# TODO if __name__ == main with postfix refactoring - .main, .if, .not, .return, .par, .while
 # to pre-download the model and tokenizer
 CommaFixer()
+# TODO if __name__ == main with postfix refactoring - .main, .if, .not, .return, .par, .while
 
 # TODO alt + h -> My productivity
 #  Feedback please!!
-
-
-def fix_commas_with_todos(self, s: str) -> str:
-    s_no_commas = re.sub(r'\s*,', '', s)
-    tokenized = self.tokenizer(
-        s_no_commas, return_tensors='pt', return_offsets_mapping=True, return_length=True, is_split_into_words=False,
-        trim_offsets=True
-    )
-
-    if tokenized['length'][0] > self.tokenizer.model_max_length:
-        return ' '.join(self.fix_commas(sentence) for sentence in nltk.sent_tokenize(s, ))
-
-    logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
-    labels = [self.id2label[tag_id.item()] for tag_id in logits.argmax(dim=2).flatten()]
-    return _fix_commas_based_on_labels_and_offsets(labels, s_no_commas, tokenized['offset_mapping'][0])
 
 
 # TODO If time left:
