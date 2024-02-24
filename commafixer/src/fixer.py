@@ -5,9 +5,9 @@ from commafixer.src.comma_fixer_interface import CommaFixerInterface
 import re
 import numpy as np
 from typing import Tuple
+# TODO fix formatting with ctrl + alt + l
 
 #TODO optimize imports with ctrl + alt + O
-
 class CommaFixer(CommaFixerInterface):
     def __init__(self):
         self.id2label = {0: 'O', 1: 'B-COMMA'}
@@ -19,15 +19,12 @@ class CommaFixer(CommaFixerInterface):
         """TODO this function could use some documentation and testing"""
 
         s_no_commas = re.sub(r'\s*,', '', s)
-    #TODO fix formatting with ctrl + alt + l
         tokenized = self.tokenizer(s_no_commas ,return_tensors = 'pt' ,return_offsets_mapping =  True, return_length = True, is_split_into_words=False, trim_offsets=True)
 
         if tokenized['length'] [0] > self.tokenizer.model_max_length:
-                # TODO how was the parameter called? ctrl + p or ctrl + q
             return ' '.join(self.fix_commas(sentence) for sentence in nltk.sent_tokenize(s, ))
 
         logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
-        # TODO ctrl + shift + p -> show expression type
         labels = [self.id2label[tag_id.item()] for tag_id in logits.argmax(dim=2).flatten()]
         return _fix_commas_based_on_labels_and_offsets(labels, s_no_commas, tokenized['offset_mapping'][0])
 
@@ -56,9 +53,10 @@ def _fix_commas_based_on_labels_and_offsets(
 
     for i, label in enumerate(labels):
         current_offset = offset_map[i][1] + commas_inserted
-        # TODO extract method or variable - ctrl + alt + v/m, or ctrl + shift + alt + t for all the options
+        # TODO extract method or variable - ctrl + alt + v/m, or ctrl + shift + alt + t for all the options - get rid of comments
         # Should we insert commas
         if label == 'B-COMMA' and result[current_offset].isspace():
+            # insert a comma between tokens
             result = result[:current_offset] + ',' + result[current_offset:]
             commas_inserted += 1
     return result
@@ -70,6 +68,23 @@ CommaFixer()
 
 # TODO alt + h -> My productivity
 #  Feedback please!!
+
+
+def fix_commas_with_todos(self, s: str) -> str:
+    s_no_commas = re.sub(r'\s*,', '', s)
+    tokenized = self.tokenizer(
+        s_no_commas, return_tensors='pt', return_offsets_mapping=True, return_length=True, is_split_into_words=False,
+        trim_offsets=True
+    )
+
+    if tokenized['length'][0] > self.tokenizer.model_max_length:
+        # TODO how was the parameter called? ctrl + p or ctrl + q
+        return ' '.join(self.fix_commas(sentence) for sentence in nltk.sent_tokenize(s, ))
+
+    logits = self.model(input_ids=tokenized['input_ids'], attention_mask=tokenized['attention_mask']).logits
+    # TODO ctrl + shift + p -> show expression type
+    labels = [self.id2label[tag_id.item()] for tag_id in logits.argmax(dim=2).flatten()]
+    return _fix_commas_based_on_labels_and_offsets(labels, s_no_commas, tokenized['offset_mapping'][0])
 
 
 # TODO If time left:
