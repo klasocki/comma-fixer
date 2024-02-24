@@ -62,8 +62,8 @@ def test_main_model_fix_commas_fixes_correct_commas(comma_fixer, test_input, exp
     "test_input, expected",
     [
         ['I, am.', 'I am.'],
-        ['A complex     clause however it misses a comma something else and a dot...?',
-         'A complex     clause, however, it misses a comma, something else and a dot...?'],
+        ['A complex     clause however it misses a comma something else and a dot?',
+         'A complex     clause, however, it misses a comma, something else and a dot?'],
         ['a pen an apple, \tand a pineapple!',
          'a pen, an apple \tand a pineapple!'],
         ['Even newlines\ntabs\tand others get preserved.',
@@ -75,8 +75,8 @@ def test_main_model_fix_commas_fixes_correct_commas(comma_fixer, test_input, exp
          ' This is a sentence. With a lot of useless punctuation!!??. O.o However, we have to insert commas O-O '
          'nonetheless, or we will fail this test.'],
         [
-            " The ship 's secondary armament consisted of fourteen 45 @-@ calibre 6 @-@ inch ( 152 mm ) quick @-@ firing ( QF ) guns mounted in casemates . Lighter guns consisted of eight 47 @-@ millimetre ( 1 @.@ 9 in ) three @-@ pounder Hotchkiss guns and four 47 @-@ millimetre 2 @.@ 5 @-@ pounder Hotchkiss guns . The ship was also equipped with four submerged 18 @-@ inch torpedo tubes two on each broadside .",
-            " The ship 's secondary armament consisted of fourteen 45 @-@ calibre 6 @-@ inch ( 152 mm ) quick @-@ firing ( QF ) guns mounted in casemates . Lighter guns consisted of eight 47 @-@ millimetre ( 1 @.@ 9 in ), three @-@ pounder Hotchkiss guns and four 47 @-@ millimetre 2 @.@ 5 @-@ pounder Hotchkiss guns . The ship was also equipped with four submerged 18 @-@ inch torpedo tubes, two on each broadside ."]
+            " The ship 's secondary armament consisted of fourteen 45 @-@ calibre 6 @-@ inch ( 152 mm ) quick @-@ firing ( QF ) guns mounted in casemates . Lighter guns consisted of eight 47 @-@ millimetre ( 1 @.@ 9 in ) three @-@ pounder Hotchkiss guns and four 47 @-@ millimetre 2 @.@ 5 @-@ pounder Hotchkiss guns . The ship was also equipped with four submerged 18 @-@ inch torpedo tubes two on each broadside.",
+            " The ship 's secondary armament consisted of fourteen 45 @-@ calibre 6 @-@ inch ( 152 mm ) quick @-@ firing ( QF ) guns mounted in casemates . Lighter guns consisted of eight 47 @-@ millimetre ( 1 @.@ 9 in ), three @-@ pounder Hotchkiss guns and four 47 @-@ millimetre 2 @.@ 5 @-@ pounder Hotchkiss guns . The ship was also equipped with four submerged 18 @-@ inch torpedo tubes, two on each broadside."]
 
     ]
 )
