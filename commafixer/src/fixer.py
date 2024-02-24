@@ -5,8 +5,6 @@ from commafixer.src.comma_fixer_interface import CommaFixerInterface
 import re
 import numpy as np
 from typing import Tuple, List
-
-
 # TODO fix formatting with ctrl + alt + l
 #TODO optimize imports with ctrl + alt + O
 class CommaFixer(CommaFixerInterface):
