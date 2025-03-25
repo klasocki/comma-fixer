@@ -17,8 +17,7 @@ class CommaFixer(CommaFixerInterface):
         """TODO this function could use some documentation and testing"""
 
         s_no_commas = re.sub(r'\s*,', '', s)
-        tokenized = self.tokenizer(s_no_commas ,return_tensors = 'pt' ,return_offsets_mapping =  True, return_length
-        = True, is_split_into_words=False)
+        tokenized = self.tokenizer(s_no_commas ,return_tensors = 'pt' ,return_offsets_mapping =  True, return_length= True, is_split_into_words=False)
 
         if tokenized['length'] [0] > self.tokenizer.model_max_length:
             return ' '.join(self.fix_commas(sentence) for sentence in nltk.sent_tokenize(s, ))
