@@ -12,13 +12,14 @@ setup(
         "fastapi == 0.101.1",
         "uvicorn == 0.23.2",
         "nltk == 3.8.1",
+        "numpy < 2.0"
         'peft==0.5.0',
         "torch == 2.0.1",
         "transformers == 4.31.0",
         # for the tokenizer of the baseline model
         "protobuf == 4.24.0",
         "sentencepiece == 0.1.99",
-
+        "setuptools==69.5.1"
     ],
     extras_require={
         'training': [

@@ -3,7 +3,6 @@ from commafixer.src.baseline import BaselineCommaFixer, _remove_punctuation
 from commafixer.src.fixer import CommaFixer
 
 
-# TODO look up best practices and duplication for tests like these
 @pytest.fixture()
 def baseline_fixer():
     yield BaselineCommaFixer()
@@ -58,7 +57,7 @@ def test_main_model_fix_commas_fixes_correct_commas(comma_fixer, test_input, exp
 
 
 @pytest.mark.parametrize(
-    # TODO make it look prettier and add 'ha ha' to all the strings, alt + j, alt + shift + click for multi cursors,
+    # TODO make it look prettier and add 'ha ha' to all the strings, alt + j, alt + shift + click for multi cursors
     "test_input, expected",
     [
         ['I, am.', 'I am.'],
@@ -84,6 +83,7 @@ def test_baseline_fix_commas_fixes_incorrect_commas(baseline_fixer, test_input, 
     result = baseline_fixer.fix_commas(s=test_input)
     assert result == expected
 
+#TODO ctrl + shift + F10 for running at cursor, or shift + F10 for last run. F9 for debug
 
 @pytest.mark.parametrize(
     "test_input, expected",
