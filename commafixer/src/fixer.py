@@ -12,7 +12,7 @@ class CommaFixer(CommaFixerInterface):
         self.id2label = {0: 'O', 1: 'B-COMMA'}
         self.label2id = {'O': 0, 'B-COMMA': 1}
         self.model, self.tokenizer = self._load_peft_model()
-# TODO ctrl + shift + t go to tests, find test_baseline_fix_commas_fixes_incorrect_commas
+# TODO ctrl + shift + t go to tests, find test_main_model_fix_commas_fixes_incorrect_commas
     def fix_commas(self , s : str ) -> str   :
         """TODO this function could use some documentation and testing"""
 
