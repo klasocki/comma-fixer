@@ -9,6 +9,17 @@ app_file: app.py
 pinned: true
 app_port: 8000
 ---
+# Workshop setup
+
+For the Tips and Tricks workshop, in order to be able to follow along in PyCharm:
+
+1. In the bottom right corner, find python interpreters. Alternatively, search for 'Python Interpreter' with shift+shift.
+2. Add new interpreter -> Add local interpreter
+3. Generate new -> Virtualenv. Choose your installed python (should be at least 3.8, preferably 3.10)
+4. You should be prompted to install new packages, if not, install them yourself from the repo root (might take a while):
+```bash
+pip install -e .[test]
+```
 
 # Comma fixer
 This repository contains a web service for fixing comma placement within a given text, for instance:
