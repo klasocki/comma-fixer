@@ -42,7 +42,7 @@ class TestCorrectStringsAreUnchanged:
         ['Even newlines\ntabs\tand others get preserved.',
             'Even newlines,\ntabs\tand others get preserved.'],
         ['I had no Creativity left, therefore, I come here, and write useless examples, for this test.',
-            'I had no Creativity left, therefore I come here and write useless examples for this test.'],
+            'I had no Creativity left, therefore, I come here and write useless examples for this test.'],
         [' This is a sentence. With, a lot of, useless punctuation!!??. O.o However we have to insert commas O-O, '
          'nonetheless or we will fail this test.',
             ' This is a sentence. With a lot of useless punctuation!!??. O.o However, we have to insert commas O-O '
