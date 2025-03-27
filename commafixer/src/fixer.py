@@ -80,5 +80,7 @@ CommaFixer()
 #  recent locations with ctrl + shift + e
 #  shift + click for logging conditional breakpoints
 #  alt + h -> My productivity
+#  ctrl + k for commit, add shift for push, ctrl + t for updating project.
+#  Add changelist, rever changes
 
 #  Feedback please!!
